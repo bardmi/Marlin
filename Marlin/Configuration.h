@@ -68,10 +68,10 @@
 // config/examples/SCARA and customize for your machine.
 //
 
-#define QQS
+//#define QQS
 //#define QQS_SKR_2209
 //#define Q5
-//#define Q5_2208
+#define Q5_2208
 
 //#define AUTO_BED_LEVELING_BILINEAR
 #define AUTO_BED_LEVELING_UBL
@@ -845,7 +845,7 @@
 #if EITHER(QQS, Q5)
   #define DRIVER_USED A4988 
 #endif
-#if ENABLED(QQ5_2208)
+#if ENABLED(Q5_2208)
   #define DRIVER_USED TMC2208_STANDALONE 
 #endif
 
@@ -916,7 +916,7 @@
 #if EITHER(QQS, QQS_SKR_2209)
 #define XYZ_PULLEY_TEETH 16
 #endif
-#if EITHER(QQ5_2208, Q5)
+#if EITHER(Q5, Q5_2208)
 #define XYZ_PULLEY_TEETH 20
 #endif
 
@@ -1274,9 +1274,18 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
+#if EITHER(QQS_SKR_2209,Q5_2208)
+  #define INVERT_X_DIR false
+  #define INVERT_Y_DIR false
+  #define INVERT_Z_DIR false
+#endif
+
+#if EITHER(QQS,Q5)
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR true
 #define INVERT_Z_DIR true
+#endif
+
 
 // @section extruder
 
@@ -2322,6 +2331,10 @@
 #if ANY(QQS,Q5,Q5_2208)
   #define FSMC_GRAPHICAL_TFT
 #endif
+#if ANY(Q5,Q5_2208)
+// Rotate screen for FLSUN Q5
+#define TFT_SCREEN_ROTATE_180
+#endif
 //=============================================================================
 //============================  Other Controllers  ============================
 //=============================================================================
@@ -2340,6 +2353,10 @@
   #define XPT2046_Y_CALIBRATION  -8981
   #define XPT2046_X_OFFSET       -43
   #define XPT2046_Y_OFFSET        257
+#endif
+#if ANY(Q5,Q5_2208)
+// Rotate touch screen for FLSUN Q5
+  #define XPT2046_ROTATE_180
 #endif
 
 //
